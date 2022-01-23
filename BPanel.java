@@ -57,6 +57,8 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     int missTyped = 0;
     int trueTyped = 0;
 
+    int num = 0;
+
     BPanel() throws IOException {
         // 問題文をmondaiJPとmondaiENに上書き
         TextImport tx = new TextImport();
@@ -202,7 +204,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
                 sushiSize[i] = 0;
             }
             sushiSize[RandomSushiImg()] = 200;
-
+            num = 0;
             int endNo = RandomString();
             bt[0].setText(mondaiJP[endNo]);
             bt[1].setText(mondaiEN[endNo]);
@@ -216,7 +218,6 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
         // TODO Auto-generated method stub
         String str = bt[1].getText();
         int text_length = str.length();
-        int num = 0;
         char head_text = str.charAt(num);
         int endNo = 0;
 

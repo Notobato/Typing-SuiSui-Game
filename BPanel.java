@@ -19,7 +19,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     Timer timer = new Timer(1, this);
 
     int OneSec = 0;
-    int EndTime = 10;
+    int EndTime = 90;
     int gameTrueOrFalse = 0;
     JButton[] bt = new JButton[2];
     JButton[] bt1 = new JButton[4];
@@ -72,6 +72,15 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
             sushiSize[i] = 0;
         }
         sushiSize[0] = 200;
+
+        for (int i = 0; i < 4; i++) {
+            bt1[i] = new JButton();
+
+        }
+        bt1[0].setBounds(350, 100, 300, 200);// 終了の文字
+        bt1[1].setBounds(350, 800 - 350, 300, 50);// 仏陀ボタン
+        bt1[2].setBounds(350, 800 - 300, 300, 50);// 真実判定
+        bt1[3].setBounds(350, 800 - 250, 300, 50);// 戯言判定
 
         this.setLayout(null);
 
@@ -161,6 +170,18 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
                 for (int i = 0; i < 2; i++) {
                     bt[i].setBounds(0, 0, 0, 0);
                 }
+                for (int i = 0; i < 4; i++) {
+                    add(bt1[i]);
+                }
+                bt1[0].setFont(new Font(Font.DIALOG, Font.BOLD, 100));
+                bt1[0].setText("終了");
+                bt1[1].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+                bt1[1].setText("お皿の数:" + SushiCount);
+                bt1[2].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+                bt1[2].setText("正しい数:" + trueTyped);
+                bt1[3].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+                bt1[3].setText("間違った数:" + missTyped);
+
                 labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
                 labTimeInt.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
                 labTimeStr.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));

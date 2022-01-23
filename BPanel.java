@@ -218,6 +218,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
         // TODO Auto-generated method stub
         String str = bt[1].getText();
         int text_length = str.length();
+        num = 0;
         char head_text = str.charAt(num);
         int endNo = 0;
 

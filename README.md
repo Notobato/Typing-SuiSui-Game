@@ -1,6 +1,6 @@
 # Typing-SuiSui-Game
-なんか
-これはくそげーです
-## 遊び方
-適切に吸ってください
-あなたは仏陀になれます
+This will be Typing-SuiSui-Game (feat.notobato).
+
+## How to use?
+Please suck properly.
+If you didn't install Git, you need to install Git. (maybe)

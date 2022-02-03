@@ -222,9 +222,12 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
             game = true;
         }
 
-        if ((e.getKeyChar() == KeyEvent.VK_SPACE && gameTrueOrFalse == 1) || e.getKeyChar() == KeyEvent.VK_ESCAPE) {
+        if ((e.getKeyChar() == KeyEvent.VK_SPACE && gameTrueOrFalse == 1)
+                || (e.getKeyChar() == KeyEvent.VK_ESCAPE && game == true)) {
 
-            timer.stop();
+            if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
+                timer.stop();
+            }
 
             game = false;
             gameTrueOrFalse = 0;

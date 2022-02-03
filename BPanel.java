@@ -79,10 +79,9 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
             bt1[i] = new JButton();
 
         }
-        bt1[0].setBounds(350, 100, 300, 200);// 終了の文字
-        bt1[1].setBounds(350, 800 - 350, 300, 50);// 仏陀ボタン
-        bt1[2].setBounds(350, 800 - 300, 300, 50);// 真実判定
-        bt1[3].setBounds(350, 800 - 250, 300, 50);// 戯言判定
+
+        bt1[0].addActionListener(this);
+        bt1[0].addKeyListener(this);
 
         this.setLayout(null);
 
@@ -149,13 +148,6 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        if (e.getSource() == bt[0] && gameTrueOrFalse == 0) {
-            timer.start();
-
-            StartSpace = 0;
-            labStart.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, StartSpace));
-            game = true;
-        }
 
         // 秒数カウント
         OneSec++;
@@ -178,11 +170,16 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
                 bt1[0].setFont(new Font(Font.DIALOG, Font.BOLD, 100));
                 bt1[0].setText("終了");
                 bt1[1].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
-                bt1[1].setText("仏説の数:" + SushiCount);
+                bt1[1].setText("寿司の数:" + SushiCount);
                 bt1[2].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
                 bt1[2].setText("真実の数:" + trueTyped);
                 bt1[3].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
                 bt1[3].setText("虚偽の数:" + missTyped);
+
+                bt1[0].setBounds(350, 100, 300, 200);// 終了の文字
+                bt1[1].setBounds(350, 800 - 350, 300, 50);// 仏陀ボ
+                bt1[2].setBounds(350, 800 - 300, 300, 50);// 真実判定
+                bt1[3].setBounds(350, 800 - 250, 300, 50);// 戯言判定
 
                 labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
                 labTimeInt.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
@@ -216,6 +213,69 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
+
+        if (e.getKeyChar() == KeyEvent.VK_SPACE && gameTrueOrFalse == 0) {
+            timer.start();
+
+            StartSpace = 0;
+            labStart.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, StartSpace));
+            game = true;
+        }
+
+        if (e.getKeyChar() == KeyEvent.VK_SPACE && gameTrueOrFalse == 1) {
+            game = true;
+            gameTrueOrFalse = 0;
+
+            EndTime = 90;
+
+            sushix = 0;
+            miss = 0;
+            StartSpace = 40;
+
+            trueTyped = 0;
+            missTyped = 0;
+            SushiCount = 0;
+
+            sushiSize[0] = 200;
+
+            for (int i = 0; i < 4; i++) {
+                bt1[i].setBounds(0, 0, 0, 0);
+            }
+
+            labTimeInt.setText("" + EndTime);
+            labCount.setText("" + SushiCount);
+
+            labTimeStr.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labTimeStr.setBounds(50, 200, 150, 200);
+
+            labTimeInt.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labTimeInt.setBounds(170, 276, 50, 50);
+
+            labStart.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, StartSpace));
+            labStart.setBounds(290, 200, 1000, 150);
+            labStart.addKeyListener(this);
+
+            labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, miss));
+            labMiss.setBounds(450, 400, 150, 150);
+            labMiss.addKeyListener(this);
+
+            labImport.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labImport.setBounds(750, 600, 150, 200);
+
+            labCount.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labCount.setBounds(870, 676, 50, 50);
+
+            int numDF = RandomString();
+            bt[0].setText(mondaiJP[numDF]);
+            bt[1].setText(mondaiEN[numDF]);
+
+            bt[0].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+            bt[1].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+
+            bt[0].setBounds(350, 800 - 300, 300, 50);// テキスト日本語
+            bt[1].setBounds(350, 800 - 250, 300, 50);// テキストローマ字
+        }
+
         String str = bt[1].getText();
         int text_length = str.length();
         num = 0;
@@ -223,24 +283,25 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
         int endNo = 0;
 
         if (game == true) {
-            if (head_text == e.getKeyChar()) {
-                // 入力が正しい
-                num++;
-                trueTyped++;
-                bt[1].setText(str.substring(num));
-                miss = 0;
-                labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, miss));
-            } else {
-                // 入力が不正
-                missTyped++;
-                miss = 40;
-                labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, miss));
+            if (e.getKeyChar() != KeyEvent.VK_SPACE) {
+                if (head_text == e.getKeyChar()) {
+                    // 入力が正しい
+                    num++;
+                    trueTyped++;
+                    bt[1].setText(str.substring(num));
+                    miss = 0;
+                    labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, miss));
+                } else {
+                    // 入力が不正
+                    missTyped++;
+                    miss = 40;
+                    labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, miss));
+                }
             }
 
             // すべて打てた時
             if (num == text_length) {
                 endNo = RandomString();
-                System.out.println("AllOk");
                 bt[0].setText(mondaiJP[endNo]);
                 bt[1].setText(mondaiEN[endNo]);
                 sushix = 0;

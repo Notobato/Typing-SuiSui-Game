@@ -222,8 +222,11 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
             game = true;
         }
 
-        if (e.getKeyChar() == KeyEvent.VK_SPACE && gameTrueOrFalse == 1) {
-            game = true;
+        if ((e.getKeyChar() == KeyEvent.VK_SPACE && gameTrueOrFalse == 1) || e.getKeyChar() == KeyEvent.VK_ESCAPE) {
+
+            timer.stop();
+
+            game = false;
             gameTrueOrFalse = 0;
 
             EndTime = 90;
@@ -236,6 +239,9 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
             missTyped = 0;
             SushiCount = 0;
 
+            for (int i = 0; i < 10; i++) {
+                sushiSize[i] = 0;
+            }
             sushiSize[0] = 200;
 
             for (int i = 0; i < 4; i++) {
@@ -283,7 +289,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
         int endNo = 0;
 
         if (game == true) {
-            if (e.getKeyChar() != KeyEvent.VK_SPACE) {
+            if (e.getKeyChar() != KeyEvent.VK_SPACE && e.getKeyChar() != KeyEvent.VK_ESCAPE) {
                 if (head_text == e.getKeyChar()) {
                     // 入力が正しい
                     num++;

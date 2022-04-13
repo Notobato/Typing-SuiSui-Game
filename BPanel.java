@@ -193,7 +193,6 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
         }
 
         sushix += 2;
-        ;
         if (sushix >= this.getWidth() + 70) {
             sushix = 0;
 

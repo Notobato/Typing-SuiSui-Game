@@ -3,5 +3,11 @@
 ## 遊び方
 適切に吸ってください
 あなたは仏陀になれます
-## 動作環境
-Visual Studio Codeでは正常動作します。それ以外の環境は保証外です。Java-Open-JDK8以外も動作保証外です。
+## 推奨動作環境
+VS Code & OpenJDK-8.0
+## License
+Copyright © 2022 Typing-SuiSui-Game EmiRemi0580
+
+二次配布とかは声かけてね
+
+改変されたものも遊んでみたいので待っています^^b

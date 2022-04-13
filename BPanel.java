@@ -22,7 +22,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     int EndTime = 90;
     int gameTrueOrFalse = 0;
     JButton[] bt = new JButton[2];
-    JButton[] bt1 = new JButton[4];
+    JButton[] bt1 = new JButton[5];
 
     Image img1 = Toolkit.getDefaultToolkit().getImage("./img/sushi1.png");
     Image img2 = Toolkit.getDefaultToolkit().getImage("./img/sushi2.png");
@@ -75,7 +75,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
         }
         sushiSize[0] = 200;
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             bt1[i] = new JButton();
 
         }
@@ -164,7 +164,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
                 for (int i = 0; i < 2; i++) {
                     bt[i].setBounds(0, 0, 0, 0);
                 }
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 5; i++) {
                     add(bt1[i]);
                 }
                 bt1[0].setFont(new Font(Font.DIALOG, Font.BOLD, 100));
@@ -176,10 +176,15 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
                 bt1[3].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
                 bt1[3].setText("まちがえた数:" + missTyped);
 
+                bt1[4].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+                double TypeAve = (double) trueTyped/90;
+                bt1[4].setText(String.format("平均タイプ："+"%.1f"+"回/秒", TypeAve));
+
                 bt1[0].setBounds(350, 100, 300, 200);// 終了の文字
                 bt1[1].setBounds(350, 800 - 350, 300, 50);// 仏陀ボ
                 bt1[2].setBounds(350, 800 - 300, 300, 50);// 真実判定
                 bt1[3].setBounds(350, 800 - 250, 300, 50);// 戯言判定
+                bt1[4].setBounds(350, 800 - 150, 300, 50);// へいきんたいぷ
 
                 labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
                 labTimeInt.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
@@ -246,7 +251,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
             }
             sushiSize[0] = 200;
 
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 5; i++) {
                 bt1[i].setBounds(0, 0, 0, 0);
             }
 

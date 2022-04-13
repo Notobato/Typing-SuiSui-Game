@@ -172,9 +172,9 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
                 bt1[1].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
                 bt1[1].setText("寿司の数:" + SushiCount);
                 bt1[2].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
-                bt1[2].setText("真実の数:" + trueTyped);
+                bt1[2].setText("うてた数:" + trueTyped);
                 bt1[3].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
-                bt1[3].setText("虚偽の数:" + missTyped);
+                bt1[3].setText("まちがえた数:" + missTyped);
 
                 bt1[0].setBounds(350, 100, 300, 200);// 終了の文字
                 bt1[1].setBounds(350, 800 - 350, 300, 50);// 仏陀ボ

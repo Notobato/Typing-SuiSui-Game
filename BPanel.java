@@ -19,7 +19,8 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     Timer timer = new Timer(1, this);
 
     int OneSec = 0;
-    int EndTime = 90;
+    int SetTime = 90;
+    int EndTime = SetTime;
     int gameTrueOrFalse = 0;
     JButton[] bt = new JButton[2];
     JButton[] bt1 = new JButton[5];
@@ -177,7 +178,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
                 bt1[3].setText("まちがえた数:" + missTyped);
 
                 bt1[4].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
-                double TypeAve = (double) trueTyped/90;
+                double TypeAve = (double) trueTyped/SetTime;
                 bt1[4].setText(String.format("平均タイプ："+"%.1f"+"回/秒", TypeAve));
 
                 bt1[0].setBounds(350, 100, 300, 200);// 終了の文字

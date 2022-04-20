@@ -19,9 +19,10 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     Timer timer = new Timer(1, this);
 
     int OneSec = 0;
-    int SetTime = 90;
+    int SetTime = 3;
     int EndTime = SetTime;
     int gameTrueOrFalse = 0;
+    boolean IsRestart = false;
     JButton[] bt = new JButton[2];
     JButton[] bt1 = new JButton[5];
 
@@ -193,6 +194,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
                 labImport.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
                 labCount.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
                 game = false;
+                IsRestart = true;
                 gameTrueOrFalse = 1;
                 timer.stop();
             }
@@ -219,14 +221,59 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
 
-        if (e.getKeyChar() == KeyEvent.VK_SPACE && gameTrueOrFalse == 0) {
+        if(e.getKeyChar() == KeyEvent.VK_ESCAPE && IsRestart == true){
+            gameTrueOrFalse = 0;
+            IsRestart = false;
+            EndTime = SetTime;
+            sushix = 0;
+            miss = 0;
+            StartSpace = 40;
+
+            trueTyped = 0;
+            missTyped = 0;
+            SushiCount = 0;
+
+            sushiSize[0] = 200;
+
+
+            for(int i = 0; i < 5; i++){
+                bt1[i].setBounds(0, 0, 0, 0);
+            }
+
+            labTimeStr.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labTimeStr.setBounds(50, 200, 150, 200);
+            labTimeInt.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labTimeInt.setBounds(170, 276, 50, 50);
+            labStart.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, StartSpace));
+            labStart.setBounds(290, 200, 1000, 150);
+            labImport.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labImport.setBounds(750, 600, 150, 200);
+            labCount.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labCount.setBounds(870, 676, 50, 50);
+
+            labTimeInt.setText("" + EndTime);
+            labCount.setText("" + SushiCount);
+
+            int numDF = RandomString();
+            bt[0].setText(mondaiJP[numDF]);
+            bt[1].setText(mondaiEN[numDF]);
+
+            bt[0].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+            bt[1].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+
+            bt[0].setBounds(350, 800 - 300, 300, 50);// テキスト日本語
+            bt[1].setBounds(350, 800 - 250, 300, 50);// テキストローマ字
+
+        }
+
+        if (e.getKeyChar() == KeyEvent.VK_SPACE && gameTrueOrFalse == 0 && IsRestart == false) {
             timer.start();
 
             StartSpace = 0;
             labStart.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, StartSpace));
             game = true;
         }
-
+        
         if ((e.getKeyChar() == KeyEvent.VK_SPACE && gameTrueOrFalse == 1)
                 || (e.getKeyChar() == KeyEvent.VK_ESCAPE && game == true)) {
 
@@ -237,7 +284,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
             game = false;
             gameTrueOrFalse = 0;
 
-            EndTime = 90;
+            EndTime = SetTime;
 
             sushix = 0;
             miss = 0;

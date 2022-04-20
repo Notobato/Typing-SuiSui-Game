@@ -19,7 +19,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     Timer timer = new Timer(1, this);
 
     int OneSec = 0;
-    int SetTime = 3;
+    int SetTime = 90;
     int EndTime = SetTime;
     int gameTrueOrFalse = 0;
     boolean IsRestart = false;

@@ -19,10 +19,12 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     Timer timer = new Timer(1, this);
 
     int OneSec = 0;
-    int EndTime = 90;
+    int SetTime = 90;
+    int EndTime = SetTime;
     int gameTrueOrFalse = 0;
+    boolean IsRestart = false;
     JButton[] bt = new JButton[2];
-    JButton[] bt1 = new JButton[4];
+    JButton[] bt1 = new JButton[5];
 
     Image img1 = Toolkit.getDefaultToolkit().getImage("./img/sushi1.png");
     Image img2 = Toolkit.getDefaultToolkit().getImage("./img/sushi2.png");
@@ -75,14 +77,13 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
         }
         sushiSize[0] = 200;
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             bt1[i] = new JButton();
 
         }
-        bt1[0].setBounds(350, 100, 300, 200);// 終了の文字
-        bt1[1].setBounds(350, 800 - 350, 300, 50);// 仏陀ボタン
-        bt1[2].setBounds(350, 800 - 300, 300, 50);// 真実判定
-        bt1[3].setBounds(350, 800 - 250, 300, 50);// 戯言判定
+
+        bt1[0].addActionListener(this);
+        bt1[0].addKeyListener(this);
 
         this.setLayout(null);
 
@@ -149,13 +150,6 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        if (e.getSource() == bt[0] && gameTrueOrFalse == 0) {
-            timer.start();
-
-            StartSpace = 0;
-            labStart.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, StartSpace));
-            game = true;
-        }
 
         // 秒数カウント
         OneSec++;
@@ -164,7 +158,7 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
             labTimeInt.setText("" + EndTime);
             OneSec = 0;
 
-            // タイムオーバー時の処理=仏説
+            // タイムオーバー時の処理
             if (EndTime == 0) {
                 for (int i = 0; i < 10; i++) {
                     sushiSize[i] = 0;
@@ -172,17 +166,27 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
                 for (int i = 0; i < 2; i++) {
                     bt[i].setBounds(0, 0, 0, 0);
                 }
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 5; i++) {
                     add(bt1[i]);
                 }
                 bt1[0].setFont(new Font(Font.DIALOG, Font.BOLD, 100));
                 bt1[0].setText("終了");
                 bt1[1].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
-                bt1[1].setText("お皿の数:" + SushiCount);
+                bt1[1].setText("寿司の数:" + SushiCount);
                 bt1[2].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
-                bt1[2].setText("正しい数:" + trueTyped);
+                bt1[2].setText("うてた数:" + trueTyped);
                 bt1[3].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
-                bt1[3].setText("間違った数:" + missTyped);
+                bt1[3].setText("まちがえた数:" + missTyped);
+
+                bt1[4].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+                double TypeAve = (double) trueTyped/SetTime;
+                bt1[4].setText(String.format("平均タイプ："+"%.1f"+"回/秒", TypeAve));
+
+                bt1[0].setBounds(350, 100, 300, 200);// 終了の文字
+                bt1[1].setBounds(350, 800 - 350, 300, 50);// おさら
+                bt1[2].setBounds(350, 800 - 300, 300, 50);// 真判定
+                bt1[3].setBounds(350, 800 - 250, 300, 50);// 戯判定
+                bt1[4].setBounds(350, 800 - 150, 300, 50);// へいきんたいぷ
 
                 labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
                 labTimeInt.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
@@ -190,13 +194,13 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
                 labImport.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
                 labCount.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 0));
                 game = false;
+                IsRestart = true;
                 gameTrueOrFalse = 1;
                 timer.stop();
             }
         }
 
         sushix += 2;
-        ;
         if (sushix >= this.getWidth() + 70) {
             sushix = 0;
 
@@ -216,31 +220,154 @@ public class BPanel extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
+
+        if(e.getKeyChar() == KeyEvent.VK_ESCAPE && IsRestart == true){      //終了時のESCキー押下後の動作
+            gameTrueOrFalse = 0;
+            IsRestart = false;
+            EndTime = SetTime;
+            sushix = 0;
+            miss = 0;
+            StartSpace = 40;
+
+            trueTyped = 0;
+            missTyped = 0;
+            SushiCount = 0;
+
+            sushiSize[0] = 200;
+
+
+            for(int i = 0; i < 5; i++){
+                bt1[i].setBounds(0, 0, 0, 0);
+            }
+
+            labTimeStr.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labTimeStr.setBounds(50, 200, 150, 200);
+            labTimeInt.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labTimeInt.setBounds(170, 276, 50, 50);
+            labStart.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, StartSpace));
+            labStart.setBounds(290, 200, 1000, 150);
+            labImport.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labImport.setBounds(750, 600, 150, 200);
+            labCount.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labCount.setBounds(870, 676, 50, 50);
+
+            labTimeInt.setText("" + EndTime);
+            labCount.setText("" + SushiCount);
+
+            int numDF = RandomString();
+            bt[0].setText(mondaiJP[numDF]);
+            bt[1].setText(mondaiEN[numDF]);
+
+            bt[0].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+            bt[1].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+
+            bt[0].setBounds(350, 800 - 300, 300, 50);// テキスト日本語
+            bt[1].setBounds(350, 800 - 250, 300, 50);// テキストローマ字
+
+        }
+
+        if (e.getKeyChar() == KeyEvent.VK_SPACE && gameTrueOrFalse == 0 && IsRestart == false) {        //スペース押下でスタート
+            timer.start();
+
+            StartSpace = 0;
+            labStart.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, StartSpace));
+            game = true;
+        }
+        
+        if ((e.getKeyChar() == KeyEvent.VK_SPACE && gameTrueOrFalse == 1)       //スペース押下後の細かい同祭
+                || (e.getKeyChar() == KeyEvent.VK_ESCAPE && game == true)) {
+
+            if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
+                timer.stop();
+            }
+
+            //値を初期化
+            game = false;
+            gameTrueOrFalse = 0;
+
+            EndTime = SetTime;
+
+            sushix = 0;
+            miss = 0;
+            StartSpace = 40;
+
+            trueTyped = 0;
+            missTyped = 0;
+            SushiCount = 0;
+
+            //画像サイズの配列初期化
+            for (int i = 0; i < 10; i++) {
+                sushiSize[i] = 0;
+            }
+            sushiSize[0] = 200;
+
+            //終了時のボタン配置の最小化
+            for (int i = 0; i < 5; i++) {
+                bt1[i].setBounds(0, 0, 0, 0);
+            }
+
+            //ラベル設定
+            labTimeInt.setText("" + EndTime);
+            labCount.setText("" + SushiCount);
+
+            labTimeStr.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labTimeStr.setBounds(50, 200, 150, 200);
+
+            labTimeInt.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labTimeInt.setBounds(170, 276, 50, 50);
+
+            labStart.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, StartSpace));
+            labStart.setBounds(290, 200, 1000, 150);
+            labStart.addKeyListener(this);
+
+            labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, miss));
+            labMiss.setBounds(450, 400, 150, 150);
+            labMiss.addKeyListener(this);
+
+            labImport.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labImport.setBounds(750, 600, 150, 200);
+
+            labCount.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 24));
+            labCount.setBounds(870, 676, 50, 50);
+
+            //初期問題の設定
+            int numDF = RandomString();
+            bt[0].setText(mondaiJP[numDF]);
+            bt[1].setText(mondaiEN[numDF]);
+
+            bt[0].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+            bt[1].setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+
+            bt[0].setBounds(350, 800 - 300, 300, 50);// テキスト日本語
+            bt[1].setBounds(350, 800 - 250, 300, 50);// テキストローマ字
+        }
+
         String str = bt[1].getText();
         int text_length = str.length();
         num = 0;
         char head_text = str.charAt(num);
         int endNo = 0;
-
+        //ゲームがスタートした後の反応
         if (game == true) {
-            if (head_text == e.getKeyChar()) {
-                // 入力が正しい
-                num++;
-                trueTyped++;
-                bt[1].setText(str.substring(num));
-                miss = 0;
-                labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, miss));
-            } else {
-                // 入力が不正
-                missTyped++;
-                miss = 40;
-                labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, miss));
+            if (e.getKeyChar() != KeyEvent.VK_SPACE && e.getKeyChar() != KeyEvent.VK_ESCAPE) {
+                if (head_text == e.getKeyChar()) {
+                    // 入力が正しい
+                    num++;
+                    trueTyped++;
+                    bt[1].setText(str.substring(num));
+                    miss = 0;
+                    labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, miss));
+                } else {
+                    // 入力が不正
+                    missTyped++;
+                    miss = 40;
+                    labMiss.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, miss));
+                }
             }
 
             // すべて打てた時
             if (num == text_length) {
                 endNo = RandomString();
-                System.out.println("AllOk");
                 bt[0].setText(mondaiJP[endNo]);
                 bt[1].setText(mondaiEN[endNo]);
                 sushix = 0;
